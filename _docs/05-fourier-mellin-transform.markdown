@@ -97,7 +97,7 @@ base = \exp^{\frac{\log \frac{rows}{2}}{size}} = \exp^{\frac{\log \frac{286}{2}}
 \theta = \frac{-\pi * row}{size} = \frac{-\pi * -53}{320} = 29.81
 \\]
 \\[
-s = base^{col} = 1.015^11 = 1.18
+s = base^{col} = 1.015^{11} = 1.18
 \\]
 
 We choose the log-polar image to be square with the size equal to the maximum dimension of the input images.
