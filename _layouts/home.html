@@ -11,6 +11,14 @@ layout: default
 Given a pair of images, the algorithm computes the translation (x, y), scale and rotation required to register/align one image to the other.
     </p>
     <p>
+    In the example below, the first two are images of the same scene, with the camera being rotated slightly in the second image. The third overlay image shows the result of aligning the first image with the second image using this algorithm.
+    </p>
+    <p>
+        <img src="/imreg_fmt/assets/images/im0.jpg" width="240" alt="image 1" />
+        <img src="/imreg_fmt/assets/images/im1.jpg" width="240" alt="image 2" />
+        <img src="/imreg_fmt/assets/images/overlay_image.png" width="240" alt="image 1 aligned to image 2" />
+    </p>
+    <p>
     This project is a partial port of the implementation by Christoph Gohlke and Matěj Týč (see <a href="https://github.com/matejak/imreg_dft">here</a>)
 and is written in C++ and is suited for registering a sequence of images (such as from a video).
     </p>
