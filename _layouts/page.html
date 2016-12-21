@@ -1,0 +1,94 @@
+---
+layout: default
+---
+<article class="post">
+
+    <div class="docs-nav">
+        <ul class="nav-list">
+        {% for c in site.docs %}
+            <li class="nav-list-item">
+        {% if c.title == page.title %}
+        <a class="nav-link" href="{{site.baseurl}}{{c.url}}">
+                <span>{{c.title}}</span>
+            </a>
+        {% else %}
+            <a class="nav-link:not" href="{{site.baseurl}}{{c.url}}">
+                <span>{{c.title}}</span>
+            </a>
+        {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+  </header>
+
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+    {% for c in site.docs %}
+    {% if c.title == page.title %}
+      {% assign thisPost = c %}
+      {% if forloop.index == 1 %}
+        {% assign prevflag = 0 %}
+        {% assign nextflag = 1 %}
+      {% elsif forloop.index == forloop.length %}
+        {% assign prevflag = 1 %}
+        {% assign nextflag = 0 %}
+      {% else %}
+        {% assign prevflag = 1 %}
+        {% assign nextflag = 1 %}
+      {% endif %}  
+    {% endif %}
+    {% endfor %}
+
+    {% for c in site.docs %}
+      {% if c.title == page.title %}
+        {% assign prevflag = 0 %}
+      {% endif %}
+      {% if prevflag == 1 %}
+        {% assign prevPost = c %}
+        {% assign page.previous = c %}
+      {% endif %}
+    {% endfor %}
+
+    {% if nextflag == 1 %}
+      {% for c in site.docs %}
+        {% if foundPost == 1 %}
+          {% assign getNext = 1 %}
+        {% endif %}
+        {% if c.title == page.title %}
+          {% assign foundPost = 1 %}
+        {% endif %}
+        {% if getNext == 1%}
+          {% assign nextPost = c %}
+          {% assign page.next = c %}
+          {% assign foundPost = 0 %}
+          {% assign getNext = 0 %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+
+    <div id="post-nav" class="clearfix nav-slide">
+        <div class="work">
+            {% if prevPost.url %}
+            <a class="prev" href="{{site.baseurl}}{{prevPost.url}}">
+                <span class="slide-wrap">&lt; {{prevPost.title}}</span>
+            </a> 
+            {% endif %} 
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            {% if nextPost.url %} 
+            <a class="next" href="{{site.baseurl}}{{nextPost.url}}">
+                <span class="slide-wrap">{{nextPost.title}} &gt;</span>
+            </a> 
+            {% endif %} 
+        </div>
+    </div>
+  
+
+</article>
+<!-- Copied from https://github.com/pagination-demo/pagination-demo.github.io , MIT license -->

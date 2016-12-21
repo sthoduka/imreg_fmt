@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+<div class="home">
+
+    <p>
+    imreg_fmt is an implementation of the Fourier-Mellin transform-based image registration method originally described by B. S. Reddy and B. N. Chatterji in "An FFT-based Technique for Translation, Rotation, and Scale-Invariant Image Registration".
+    </p>
+    <p>
+Given a pair of images, the algorithm computes the translation (x, y), scale and rotation required to register/align one image to the other.
+    </p>
+    <p>
+    This project is a partial port of the implementation by Christoph Gohlke and Matěj Týč (see <a href="https://github.com/matejak/imreg_dft">here</a>)
+and is written in C++ and is suited for registering a sequence of images (such as from a video).
+    </p>
+    <p>
+It does not support tiling as in imreg_dft and also assumes that an image is never rotated by more than 180 degrees.
+    </p>
+    <p>
+    A brief description of the algorithm can be found here: <a href="docs/overall-pipeline">Overall pipeline</a>.
+    </p>
+
+</div>
