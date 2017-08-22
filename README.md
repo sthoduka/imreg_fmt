@@ -1,5 +1,6 @@
 imreg_fmt is an implementation of the Fourier-Mellin transform-based image registration method originally described by Reddy and Chatterji [1].
 Given a pair of images, the algorithm computes the translation (x, y), scale and rotation required to register/align one image to the other.
+A brief explanation of the algorithm is provided [here](https://sthoduka.github.io/imreg_fmt/docs/overall-pipeline/).
 
 This project is a partial port of the Python implementation by Christoph Gohlke and Matěj Týč (see [here](https://github.com/matejak/imreg_dft)).
 It is written in C++ and is suited for registering a sequence of images (such as from a video).
