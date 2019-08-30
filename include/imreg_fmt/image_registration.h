@@ -23,7 +23,7 @@ class ImageRegistration
         /*
          * register im to previous image (from previous call to the same function or initialize function)
          */
-        void registerImage(const cv::Mat &im, cv::Mat &out, std::vector<double> &transform_params, bool display_images = false);
+        void registerImage(const cv::Mat &im, cv::Mat &out, std::vector<double> &transform_params, bool display_images = false, bool save_cps = false);
         /*
          * return white image warped by same amount as last registration operation
          */

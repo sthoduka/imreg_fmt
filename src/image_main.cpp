@@ -12,6 +12,14 @@ int main(int argc, char **argv)
         std::cout << "specify two image files" << std::endl;
         return 1;
     }
+    bool save_cps = false;
+    if (argc > 3)
+    {
+        if (strcmp(argv[3], "-s") == 0)
+        {
+            save_cps = true;
+        }
+    }
     im0 = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
     im1 = cv::imread(argv[2], CV_LOAD_IMAGE_COLOR);
 
@@ -23,7 +31,7 @@ int main(int argc, char **argv)
     // x, y, rotation, scale
     std::vector<double> transform_params(4, 0.0);
     cv::Mat registered_image;
-    image_registration.registerImage(im1, registered_image, transform_params, true);
+    image_registration.registerImage(im1, registered_image, transform_params, true, save_cps);
 
 
     std::cout << "x: " << transform_params[0] << ", y: "

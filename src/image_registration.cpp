@@ -1,5 +1,6 @@
 #include <imreg_fmt/image_registration.h>
 #include <opencv2/core/eigen.hpp>
+#include <fstream>
 
 
 ImageRegistration::ImageRegistration(const cv::Mat &im) :
@@ -20,7 +21,7 @@ void ImageRegistration::initialize(const cv::Mat &im)
     processImage(im, im0_gray_, im0_logpolar_);
 }
 
-void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_image, std::vector<double> &transform_params, bool display_images)
+void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_image, std::vector<double> &transform_params, bool display_images, bool save_cps)
 {
     double rs_row, rs_col;
     double t_row, t_col;
@@ -28,7 +29,7 @@ void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_ima
 
     processImage(im, im1_gray_,im1_logpolar_);
 
-    imdft_logpolar_.phaseCorrelate(im1_logpolar_, im0_logpolar_, rs_row, rs_col);
+    Eigen::MatrixXd rot_scale_cps = imdft_logpolar_.phaseCorrelate(im1_logpolar_, im0_logpolar_, rs_row, rs_col);
     image_transforms_.getScaleRotation(rs_row, rs_col, scale, rotation);
     image_transforms_.rotateAndScale(im0_gray_, im0_rotated_, scale, rotation);
 
@@ -40,7 +41,7 @@ void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_ima
         cv::imshow("im0_rotated", im0_rotated_);
     }
 
-    imdft_.phaseCorrelate(im1_gray_, im0_rotated_, t_row, t_col);
+    Eigen::MatrixXd trans_cps = imdft_.phaseCorrelate(im1_gray_, im0_rotated_, t_row, t_col);
     image_transforms_.translate(im0_rotated_, registered_image, t_col, t_row); // x, y
 
     transform_params[0] = t_col;
@@ -49,6 +50,15 @@ void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_ima
     if (display_images)
     {
         cv::imshow("im0_registered", registered_image);
+    }
+    if (save_cps)
+    {
+        std::ofstream fout("rot_scale_cps.txt");
+        fout << rot_scale_cps;
+        fout.close();
+        std::ofstream fout_trans("trans_cps.txt");
+        fout_trans << trans_cps;
+        fout_trans.close();
     }
 }
 

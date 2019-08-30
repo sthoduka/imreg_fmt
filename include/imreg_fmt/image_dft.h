@@ -45,7 +45,7 @@ class ImageDFT
         /*
          * find translation in x and y between two images
          */
-        void phaseCorrelate(const cv::Mat &im0, const cv::Mat &im1, double &row, double &col);
+        Eigen::MatrixXd phaseCorrelate(const cv::Mat &im0, const cv::Mat &im1, double &row, double &col);
 
         /*
          * centre of mass centered at (row,col)

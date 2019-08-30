@@ -131,7 +131,7 @@ ComplexMatrix ImageDFT::crossPowerSpectrum(const ComplexMatrix &f1, const Comple
     return out;
 }
 
-void ImageDFT::phaseCorrelate(const cv::Mat &im0, const cv::Mat &im1, double &row, double &col)
+Eigen::MatrixXd ImageDFT::phaseCorrelate(const cv::Mat &im0, const cv::Mat &im1, double &row, double &col)
 {
     ComplexMatrix m0 = fft(im0);
     ComplexMatrix m1 = fft(im1);
@@ -152,6 +152,7 @@ void ImageDFT::phaseCorrelate(const cv::Mat &im0, const cv::Mat &im1, double &ro
 
     row = row - (shifted_cps.rows() / 2);
     col = col - (shifted_cps.cols() / 2);
+    return abs;
 }
 
 void ImageDFT::getCentreOfMass(const Eigen::MatrixXd &f1, double &row, double &col)
