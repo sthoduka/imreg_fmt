@@ -19,6 +19,12 @@ Compile
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make
 
+Mac OS X
+--------
+* You might have to add the following flag when running cmake (see [here](https://github.com/sthoduka/imreg_fmt/issues/2))
+
+  `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS='-isystem /usr/local/include' ..`
+
 Run
 ---
     ./image_main <path to first image> <path to second image>
