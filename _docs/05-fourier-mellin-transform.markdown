@@ -94,7 +94,7 @@ size = max(rows, cols) = max(286, 320)
 base = \exp^{\frac{\log \frac{rows}{2}}{size}} = \exp^{\frac{\log \frac{286}{2}}{320}} = 1.015
 \\]
 \\[
-\theta = \frac{-\pi * row}{size} = \frac{-\pi * -53}{320} = 29.81
+\theta = \frac{-180 * row}{size} = \frac{-180 * -53}{320} = 29.81
 \\]
 \\[
 s = base^{col} = 1.015^{11} = 1.18
