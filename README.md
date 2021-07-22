@@ -9,13 +9,12 @@ For images of size 320x240, the algorithm runs at approximately 14 Hz on an Inte
 Dependencies
 ------------
 * fftw3
-* OpenCV 2.4
+* OpenCV 4.2
 * Eigen
 
 Compile
 -------
-    mkdir build
-    cd build
+    mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make
 
