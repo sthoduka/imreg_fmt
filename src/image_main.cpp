@@ -12,8 +12,8 @@ int main(int argc, char **argv)
         std::cout << "specify two image files" << std::endl;
         return 1;
     }
-    im0 = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
-    im1 = cv::imread(argv[2], CV_LOAD_IMAGE_COLOR);
+    im0 = cv::imread(argv[1], cv::IMREAD_COLOR);
+    im1 = cv::imread(argv[2], cv::IMREAD_COLOR);
 
     cv::imshow("im0", im0);
     cv::imshow("im1", im1);

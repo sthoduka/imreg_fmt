@@ -49,7 +49,7 @@ void ImageTransforms::createLogPolarMap()
 
 void ImageTransforms::remapLogPolar(const cv::Mat &src, cv::Mat &dst)
 {
-    cv::remap(src, dst, cv_xMap, cv_yMap, CV_INTER_CUBIC & cv::INTER_MAX, cv::BORDER_CONSTANT, cv::Scalar());
+    cv::remap(src, dst, cv_xMap, cv_yMap, cv::INTER_CUBIC & cv::INTER_MAX, cv::BORDER_CONSTANT, cv::Scalar());
 }
 
 void ImageTransforms::getScaleRotation(double row, double col, double &scale, double &rotation)
@@ -114,4 +114,3 @@ Eigen::MatrixXd ImageTransforms::getApodizationWindow(int rows, int cols, int ra
 
     return col * row.transpose();
 }
-

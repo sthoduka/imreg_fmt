@@ -66,7 +66,7 @@ cv::Mat ImageRegistration::getBorderMask()
 void ImageRegistration::processImage(const cv::Mat &im, cv::Mat &gray, cv::Mat &log_polar)
 {
     im.convertTo(gray, CV_32F, 1.0/255.0);
-    cv::cvtColor(gray, gray, CV_BGR2GRAY);
+    cv::cvtColor(gray, gray, cv::COLOR_BGR2GRAY);
 
     cv::Mat apodized;
     cv::Mat im_dft_cv;
