@@ -1,3 +1,9 @@
+<p float="left">
+  <img src="docs/im0.jpg" width="250" />
+  <img src="docs/im1.jpg" width="250" /> 
+  <img src="docs/overlay_image.png" width="250" />
+</p>
+
 imreg_fmt is an implementation of the Fourier-Mellin transform-based image registration method originally described by Reddy and Chatterji [1].
 Given a pair of images, the algorithm computes the translation (x, y), scale and rotation required to register/align one image to the other.
 A brief explanation of the algorithm is provided [here](https://sthoduka.github.io/imreg_fmt/docs/overall-pipeline/).
