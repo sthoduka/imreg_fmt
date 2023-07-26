@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) Santosh Thoduka
+ *
+ * This code is licensed under the GPLv3 license, which can be found in the root directory.
+ * Original repo: https://github.com/sthoduka/imreg_fmt
+ */
 #include <imreg_fmt/image_registration.h>
 #include <opencv2/core/eigen.hpp>
 
