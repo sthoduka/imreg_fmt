@@ -209,9 +209,13 @@ Eigen::MatrixXd ImageDFT::neighbourhood(const Eigen::MatrixXd &f1, int centre_ro
         for (int i = 0; i < size; i++)
         {
             int ii = (i + row_start) % f1.rows();
+            // (-5 % 100) will return -5, not 95, thus we need to
+            // check whether ii is negative
+            ii = (ii < 0) ? ii + f1.rows() : ii;
             for(int j = 0; j < size; j++)
              {
                  int jj = (j + col_start) % f1.cols();
+                 jj = (jj < 0) ? jj + f1.cols() : jj;
                  subArray(i, j) = f1(ii, jj);
              }
         }
