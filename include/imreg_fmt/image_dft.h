@@ -39,9 +39,6 @@ class ImageDFT
          * swap 1st and 3rd quadrant, and 2nd and 4th quadrant
          */
         ComplexMatrix fftShift(const ComplexMatrix &in);
-        Eigen::MatrixXd fftShift(const Eigen::MatrixXd &in);
-        Eigen::VectorXd fftShift(const Eigen::VectorXd &in);
-        Eigen::VectorXd ifftShift(const Eigen::VectorXd &in);
 
         /*
          * cross power spectrum of two fourier transforms

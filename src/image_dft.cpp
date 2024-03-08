@@ -59,74 +59,43 @@ ComplexMatrix ImageDFT::ifft(const ComplexMatrix &in)
     iout_ = iout_ / (iout_.size());
     return iout_;
 }
-//
-// TODO: use templating so just one function is needed
-// TODO: check if row/col size is even or odd
+
 ComplexMatrix ImageDFT::fftShift(const ComplexMatrix &in)
 {
+    // odd
+    // |1,  2,  3,  4,  5  |     |14, 15, 11, 12, 13|
+    // |6,  7,  8,  9,  10 | --> |4 , 5 , 1 , 2,  3 |
+    // |11, 12, 13, 14, 15 |     |9,  10, 6,  7,  8 |
+    //
+    // even
+    // |1,  2,  3,  4  |     |11, 12, 9,  10 |
+    // |5,  6,  7,  8  | --> |15, 16, 13, 14 |
+    // |9,  10, 11, 12 |     |3,  4,  1,  2  |
+    // |13, 14, 15, 16 |     |7,  8,  5,  6  |
     ComplexMatrix out(in.rows(), in.cols());
-    int block_rows = in.rows()/2;
-    int block_cols = in.cols()/2;
-    // swap first and third quadrant
-    out.block(0, 0, block_rows, block_cols) = in.block(block_rows, block_cols, block_rows, block_cols);
-    out.block(block_rows, block_cols, block_rows, block_cols) = in.block(0, 0, block_rows, block_cols);
-    // swap second and fourth quadrant
-    out.block(block_rows, 0, block_rows, block_cols) = in.block(0, block_cols, block_rows, block_cols);
-    out.block(0, block_cols, block_rows, block_cols) = in.block(block_rows, 0, block_rows, block_cols);
-    return out;
-}
-
-Eigen::MatrixXd ImageDFT::fftShift(const Eigen::MatrixXd &in)
-{
-    Eigen::MatrixXd out(in.rows(), in.cols());
-    int block_rows = in.rows()/2;
-    int block_cols = in.cols()/2;
-    // swap first and third quadrant
-    out.block(0, 0, block_rows, block_cols) = in.block(block_rows, block_cols, block_rows, block_cols);
-    out.block(block_rows, block_cols, block_rows, block_cols) = in.block(0, 0, block_rows, block_cols);
-    // swap second and fourth quadrant
-    out.block(block_rows, 0, block_rows, block_cols) = in.block(0, block_cols, block_rows, block_cols);
-    out.block(0, block_cols, block_rows, block_cols) = in.block(block_rows, 0, block_rows, block_cols);
-    return out;
-}
-
-Eigen::VectorXd ImageDFT::fftShift(const Eigen::VectorXd &in)
-{
-    // [1, 2, 3, 4, 5] -> [4, 5, 1, 2, 3]
-    // [1, 2, 3, 4, 5, 6] -> [4, 5, 6, 1, 2, 3]
-    Eigen::VectorXd out(in.size());
-    int block_size = in.size() / 2;
-    int first_block_size = block_size;
-    int second_start_point = block_size;
-    if (in.size() % 2 != 0)
+    int q1_end_row = in.rows()/2;
+    int q1_end_col = in.cols()/2;
+    int q3_start_row = q1_end_row;
+    int q3_start_col = q1_end_col;
+    if (in.rows() % 2 != 0)
     {
-        first_block_size++;
-        second_start_point++;
+        q1_end_row++;
     }
-    // swap first half and second half
-    out.segment(block_size, first_block_size) = in.segment(0, first_block_size);
-    out.segment(0, block_size) = in.segment(first_block_size, block_size);
+    if (in.cols() % 2 != 0)
+    {
+        q1_end_col++;
+    }
+
+    // swap first and third quadrant
+    out.block(0, 0, q3_start_row, q3_start_col) = in.block(q1_end_row, q1_end_col, q3_start_row, q3_start_col);
+    out.block(q3_start_row, q3_start_col, q1_end_row, q1_end_col) = in.block(0, 0, q1_end_row, q1_end_col);
+
+    // swap second and fourth quadrant
+    out.block(q3_start_row, 0, q1_end_row, q3_start_col) = in.block(0, q1_end_col, q1_end_row, q3_start_col);
+    out.block(0, q3_start_col, q3_start_row, q1_end_col) = in.block(q1_end_row, 0, q3_start_row, q1_end_col);
     return out;
 }
 
-Eigen::VectorXd ImageDFT::ifftShift(const Eigen::VectorXd &in)
-{
-    // [4, 5, 1, 2, 3] -> [1, 2, 3, 4, 5]
-    // [4, 5, 6, 1, 2, 3] -> [1, 2, 3, 4, 5, 6]
-    Eigen::VectorXd out(in.size());
-    int block_size = in.size() / 2;
-    int second_block_size = block_size;
-    int first_start_point = block_size;
-    if (in.size() % 2 != 0)
-    {
-        second_block_size++;
-        first_start_point++;
-    }
-    // swap first half and second half
-    out.segment(first_start_point, block_size) = in.segment(0, block_size);
-    out.segment(0, second_block_size) = in.segment(block_size, second_block_size);
-    return out;
-}
 
 ComplexMatrix ImageDFT::crossPowerSpectrum(const ComplexMatrix &f1, const ComplexMatrix &f2)
 {
