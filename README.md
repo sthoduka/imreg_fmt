@@ -14,9 +14,9 @@ For images of size 320x240, the algorithm runs at approximately 14 Hz on an Inte
 
 Dependencies
 ------------
-* fftw3
+* fftw3 (sudo apt install libfftw3-dev)
 * OpenCV 4.2
-* Eigen
+* Eigen (sudo apt install libeigen3-dev)
 
 Compile
 -------
@@ -29,6 +29,14 @@ Mac OS X
 * You might have to add the following flag when running cmake (see [here](https://github.com/sthoduka/imreg_fmt/issues/2))
 
   `cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS='-isystem /usr/local/include' ..`
+
+OpenCV Phase Correlate
+----------------------
+As reported by [brht0](https://github.com/brht0) in this [issue](https://github.com/sthoduka/imreg_fmt/issues/15), the performance of the phaseCorrelate function from OpenCV is much faster (leading to ~3x improvement in speed). Thus by default, the code now uses the OpenCV function. To enable the original function, set the variable `USE_OPENCV_PHASECORRELATE=OFF` (and `ON` to go back to OpenCV) as follows and `make` again:
+
+    cmake -DCMAKE_BUILD_TYPE=Release -DUSE_OPENCV_PHASECORRELATE=OFF ..
+
+There are minor differences in the final output from the two methods. In some initial tests, there was up to 0.8 pixel difference (and very minimal difference in rotation and scale) for a given pair of images.
 
 Run
 ---

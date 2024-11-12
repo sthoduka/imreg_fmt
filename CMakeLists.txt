@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(imreg_fmt)
 
+option(USE_OPENCV_PHASECORRELATE "Use phaseCorrelate function from OpenCV instead of own implementation" ON)
+if(USE_OPENCV_PHASECORRELATE)
+  add_definitions(-DUSE_OPENCV_PHASECORRELATE)
+endif()
+
 find_library(FFTW_LIBRARY
      NAMES fftw3 fftw)
 set(FFTW_LIBRARIES "${FFTW_LIBRARY}")

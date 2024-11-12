@@ -28,14 +28,22 @@ void ImageRegistration::initialize(const cv::Mat &im)
 
 void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_image, std::vector<double> &transform_params, bool display_images)
 {
+#ifndef USE_OPENCV_PHASECORRELATE
     double rs_row, rs_col;
     double t_row, t_col;
+#endif
     double scale, rotation;
 
     processImage(im, im1_gray_,im1_logpolar_);
 
+#ifndef USE_OPENCV_PHASECORRELATE
     imdft_logpolar_.phaseCorrelate(im1_logpolar_, im0_logpolar_, rs_row, rs_col);
     image_transforms_.getScaleRotation(rs_row, rs_col, scale, rotation);
+#else
+    auto[rs_col, rs_row] = cv::phaseCorrelate(im1_logpolar_, im0_logpolar_);
+    image_transforms_.getScaleRotation(-rs_row, -rs_col, scale, rotation);
+#endif
+
     image_transforms_.rotateAndScale(im0_gray_, im0_rotated_, scale, rotation);
 
     transform_params[2] = rotation;
@@ -46,11 +54,17 @@ void ImageRegistration::registerImage(const cv::Mat &im, cv::Mat &registered_ima
         cv::imshow("im0_rotated", im0_rotated_);
     }
 
+#ifndef USE_OPENCV_PHASECORRELATE
     imdft_.phaseCorrelate(im1_gray_, im0_rotated_, t_row, t_col);
     image_transforms_.translate(im0_rotated_, registered_image, t_col, t_row); // x, y
-
     transform_params[0] = t_col;
     transform_params[1] = t_row;
+#else
+    auto[t_col, t_row] = cv::phaseCorrelate(im1_gray_, im0_rotated_);
+    image_transforms_.translate(im0_rotated_, registered_image, -t_col, -t_row); // x, y
+    transform_params[0] = -t_col;
+    transform_params[1] = -t_row;
+#endif
 
     if (display_images)
     {
