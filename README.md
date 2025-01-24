@@ -51,3 +51,12 @@ References
 ----------
 [1] B. S. Reddy and B. N. Chatterji, “An FFT-based Technique for Translation,
 Rotation, and Scale-Invariant Image Registration,” IEEE Transactions on Image Processing, vol. 5, no. 8, pp. 1266–1271, 1996.
+
+Other Repositories
+------------------
+You might be interested in some of the following repositories:
+
+* [imreg_dft](https://github.com/matejak/imreg_dft): Python implementation
+* [fourier-mellin](https://github.com/brht0/fourier-mellin): C++ implementation with Python bindings
+* [LogPolarFFTTemplateMatcher](https://github.com/Smorodov/LogPolarFFTTemplateMatcher): C++ implementation
+* [o-eFMT](https://github.com/STAR-Center/o-eFMT): extension which performs better in scenarios where the scene depth is not uniform (see [paper](https://www.mdpi.com/2072-4292/13/5/1000))
