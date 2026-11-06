@@ -68,7 +68,7 @@ int main(int argc, char **argv)
         int c = cv::waitKey(1);
         if ((char)c == 'q')
         {
-            exit(0);
+            break;
         }
     }
     return 0;

@@ -72,7 +72,6 @@ void ImageTransforms::getScaleRotation(double row, double col, double &scale, do
 
 void ImageTransforms::rotateAndScale(const cv::Mat &src, cv::Mat &dst, double scale, double angle)
 {
-    cv::Mat warped_image;
     cv::Mat rotationMatrix = cv::getRotationMatrix2D(cv::Point(src.cols/2, src.rows/2), angle, scale);
     cv::warpAffine(src, dst, rotationMatrix, src.size());
     cv::warpAffine(border_mask_, rotated_mask_, rotationMatrix, src.size());
@@ -80,7 +79,6 @@ void ImageTransforms::rotateAndScale(const cv::Mat &src, cv::Mat &dst, double sc
 
 void ImageTransforms::translate(const cv::Mat &src, cv::Mat &dst, double xTrans, double yTrans)
 {
-    cv::Mat warped_image;
     cv::Mat translateMatrix = (cv::Mat_<float>(2, 3) << 1.0, 0.0, xTrans, 0.0, 1.0, yTrans);
     cv::warpAffine(src, dst, translateMatrix, src.size());
     cv::warpAffine(rotated_mask_, rotated_translated_mask_, translateMatrix, src.size());
