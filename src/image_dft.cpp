@@ -168,7 +168,7 @@ Eigen::MatrixXd ImageDFT::neighbourhood(const Eigen::MatrixXd &f1, int centre_ro
     int col_start = centre_col - radius;
     int col_end   = centre_col + radius;
     // neighbourhood falls within original size
-    if (row_start > 0 && row_end < f1.rows() && col_start > 0 && col_start < f1.cols())
+    if (row_start > 0 && row_end < f1.rows() && col_start > 0 && col_end < f1.cols())
     {
         subArray = f1.block(row_start, col_start, size, size);
     }
